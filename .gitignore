@@ -1,0 +1,24 @@
+# Ignore the build directory
+build/
+
+# CMake-generated files
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# Executables
+*.out
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Object files
+*.o
+*.obj
+
+# Backup and temporary files
+*~
+*.swp
+.DS_Store
