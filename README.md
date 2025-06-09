@@ -18,7 +18,8 @@ This library is designed to:
 ## 🧱 Included Data Structures
 
 ### Linear Structures
-
+- Linked List
+- Queue
 
 ### Trees
 
