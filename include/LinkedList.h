@@ -19,9 +19,7 @@ class LinkedList{
         LinkedList():head(nullptr){}
 
         ~LinkedList(){
-            while(!isEmpty()){
-                removeFromFront();
-            }
+            clear();
         }
 
         void insert(T data){
@@ -72,6 +70,9 @@ class LinkedList{
         }
 
         T removeFromFront(){
+            if(isEmpty()){
+                throw std::underflow_error("List empty");
+            }
             T data = head->data;
             Node<T>* temp = head;
             head = head->next;
@@ -83,11 +84,11 @@ class LinkedList{
             return head->data;
         }
 
-        bool isEmpty(){
+        bool isEmpty() const{
             return (head == nullptr);
         }
 
-        void display(){
+        void display() const{
             Node<T>* ptr = head;
             while(ptr){
                 std::cout<<ptr->data<<" ";
@@ -96,7 +97,7 @@ class LinkedList{
             std::cout<<"\n";
         }
         
-        int size(){
+        int size() const{
             Node<T>* ptr = head;
             int size = 0;
             while(ptr){
@@ -104,6 +105,12 @@ class LinkedList{
                 size++;
             }
             return size;
+        }
+
+        void clear(){
+            while(!isEmpty()){
+                removeFromFront();
+            }
         }
 
 

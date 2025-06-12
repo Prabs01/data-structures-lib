@@ -22,6 +22,7 @@ This library is designed to:
 - Queue
 
 ### Trees
+- Binary Tree
 
 
 ### Hashing
