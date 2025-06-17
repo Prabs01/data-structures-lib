@@ -2,6 +2,8 @@
 
 #include<iostream>
 #include"Queue.h"
+#include<vector>
+#include<string>
 
 template<typename T>
 struct BinaryTreeNode{
@@ -39,6 +41,33 @@ class BinaryTree{
             std::cout<<node->data<<" ";
         }
     }
+
+    BinaryTreeNode<T>* insertHelper(BinaryTreeNode<T>* node , int val){
+        if(!node) return new BinaryTreeNode<T>(val);
+        
+        if(val < node->data){
+            node->left = insertHelper(node->left, val);
+        }else{
+            node->right = insertHelper(node->right, val);
+        }
+        return node;
+    }
+
+
+    void displayHelper(BinaryTreeNode<T>* node, std::string prefix = "", bool isLeft = true) const {
+        if (!node) return;
+
+        if (node->right)
+            displayHelper(node->right, prefix + (isLeft ? "│   " : "    "), false);
+
+        std::cout << prefix;
+        std::cout << (isLeft ? "└── " : "┌── ");
+        std::cout << node->data << std::endl;
+
+        if (node->left)
+            displayHelper(node->left, prefix + (isLeft ? "    " : "│   "), true);
+    }
+
 
     public:
         BinaryTree():root(nullptr){}
@@ -82,6 +111,10 @@ class BinaryTree{
 
         }
 
+        void insert(T data){
+            root = insertHelper(root, data);
+        }
+
         void preOrderTraversal(){
             preOrderTraversalHelper(root);
             std::cout<<"\n";
@@ -115,4 +148,12 @@ class BinaryTree{
             }
             std::cout<<"\n";
         }
+
+
+        void display() const{ 
+    
+            displayHelper(root);
+        }
+
+        
 };

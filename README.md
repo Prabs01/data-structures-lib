@@ -20,6 +20,7 @@ This library is designed to:
 ### Linear Structures
 - Linked List
 - Queue
+- Stack
 
 ### Trees
 - Binary Tree

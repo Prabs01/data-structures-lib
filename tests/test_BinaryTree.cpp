@@ -15,4 +15,13 @@ int main(){
     tree.postOrderTraversal();
     tree.levelOrderTraversal();
 
+
+
+    tree.insert(6);
+    tree.insert(5);
+    tree.insert(7);
+    tree.levelOrderTraversal();
+
+    tree.display();
+
 }
