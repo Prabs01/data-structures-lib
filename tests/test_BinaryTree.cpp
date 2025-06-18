@@ -1,6 +1,9 @@
 #include"BinaryTree.h"
 
 int main(){
+
+    //TEST 1
+    
     BinaryTree<int> tree;
     tree.initializeRoot(1);
 
@@ -22,6 +25,21 @@ int main(){
     tree.insert(7);
     tree.levelOrderTraversal();
 
-    tree.display();
+    int x = 1;
+    std::cout<<"is "<<x<<" present?"<<(tree.search(x)?"Yes":"No")<<std::endl;
+
+    x = 9;
+    std::cout<<"is "<<x<<" present?"<<(tree.search(x)?"Yes":"No")<<std::endl;
+
+    
+
+    // tree.display();
+
+    //#####################
+    //TEST 2
+    std::vector<int> values = {1,2,3,4,5,6};
+    BinaryTree<int> tree2(values);
+
+    tree2.display();
 
 }

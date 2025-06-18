@@ -68,11 +68,41 @@ class BinaryTree{
             displayHelper(node->left, prefix + (isLeft ? "    " : "│   "), true);
     }
 
+    bool searchHelper(BinaryTreeNode<T>* node, T value) const{
+        if(!node) return false;
+
+        if(node->data == value) return true;
+
+        return searchHelper(node->left, value) || searchHelper(node->right, value);
+    }
+
 
     public:
         BinaryTree():root(nullptr){}
 
-        ~BinaryTree(){
+        BinaryTree(const std::vector<T> values){
+            if(values.empty()) return;
+
+            root = new BinaryTreeNode<T>(values[0]);
+
+            BinaryTreeNode<T>* ptr = root;
+            
+            Queue<BinaryTreeNode<T>*> q;
+            q.enQueue(root);
+
+            int i = 1;
+
+            while(i<values.size()){
+                ptr = q.deQueue();
+                
+                ptr->left = new BinaryTreeNode<T>(values[i++]);
+                q.enQueue(ptr->left);
+
+                if(i>=values.size()) break;
+
+                ptr->right = new BinaryTreeNode<T>(values[i++]);
+                q.enQueue(ptr->right);
+            }
         }
 
         void initializeRoot(T data){
@@ -149,10 +179,13 @@ class BinaryTree{
             std::cout<<"\n";
         }
 
-
         void display() const{ 
     
             displayHelper(root);
+        }
+
+        bool search(T value) const{
+            return searchHelper(root, value);
         }
 
         

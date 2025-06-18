@@ -24,7 +24,7 @@ foreach(test_file ${TEST_SOURCES})
 endforeach()
 
 # Solved Problems
-file(GLOB SOLVED_SOURCES "solved-problems/**/*.cpp")
+file(GLOB SOLVED_SOURCES "solved-problems/*.cpp")
 
 foreach(problem_file ${SOLVED_SOURCES})
     get_filename_component(problem_name ${problem_file} NAME_WE)
