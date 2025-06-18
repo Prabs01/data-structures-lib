@@ -33,7 +33,7 @@ int main(){
 
     
 
-    // tree.display();
+    tree.display();
 
     //#####################
     //TEST 2

@@ -42,17 +42,6 @@ class BinaryTree{
         }
     }
 
-    BinaryTreeNode<T>* insertHelper(BinaryTreeNode<T>* node , int val){
-        if(!node) return new BinaryTreeNode<T>(val);
-        
-        if(val < node->data){
-            node->left = insertHelper(node->left, val);
-        }else{
-            node->right = insertHelper(node->right, val);
-        }
-        return node;
-    }
-
 
     void displayHelper(BinaryTreeNode<T>* node, std::string prefix = "", bool isLeft = true) const {
         if (!node) return;
@@ -75,7 +64,7 @@ class BinaryTree{
 
         return searchHelper(node->left, value) || searchHelper(node->right, value);
     }
-
+ 
 
     public:
         BinaryTree():root(nullptr){}
@@ -142,7 +131,29 @@ class BinaryTree{
         }
 
         void insert(T data){
-            root = insertHelper(root, data);
+            if(!root){
+                root = new BinaryTreeNode<T>(data);
+                return;
+            }
+
+            Queue<BinaryTreeNode<T>*> q;
+            BinaryTreeNode<T>* ptr = root;
+            q.enQueue(root);
+
+            while(!q.isEmpty()){
+                ptr = q.deQueue();
+
+                if(!ptr->left){
+                    ptr->left = new BinaryTreeNode<T>(data);
+                    return;
+                }else if(!ptr->right){
+                    ptr->right = new BinaryTreeNode<T>(data);
+                    return;
+                }
+
+                q.enQueue(ptr->left);
+                q.enQueue(ptr->right);
+            }
         }
 
         void preOrderTraversal(){
