@@ -23,6 +23,7 @@ int main(){
     tree.insert(6);
     tree.insert(5);
     tree.insert(7);
+    tree.insert(8);
     tree.levelOrderTraversal();
 
     int x = 1;
@@ -35,11 +36,15 @@ int main(){
 
     tree.display();
 
+     std::cout<<"Size is "<<tree.size()<<std::endl;
+
     //#####################
     //TEST 2
     std::vector<int> values = {1,2,3,4,5,6};
     BinaryTree<int> tree2(values);
 
     tree2.display();
+
+    std::cout<<"Size is "<<tree2.size()<<std::endl;
 
 }

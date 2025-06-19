@@ -64,6 +64,16 @@ class BinaryTree{
 
         return searchHelper(node->left, value) || searchHelper(node->right, value);
     }
+
+    bool isLeaf(BinaryTreeNode<T>* node) const{
+        return (node && (!node->left) && (!node->right));
+    }
+
+    int sizeHelper(BinaryTreeNode<T>* node) const{
+        if(!node) return 0;
+
+        return (sizeHelper(node->left) + sizeHelper(node->right) + 1 );
+    }
  
 
     public:
@@ -197,6 +207,10 @@ class BinaryTree{
 
         bool search(T value) const{
             return searchHelper(root, value);
+        }
+
+        int size() const{
+            return sizeHelper(root);
         }
 
         
