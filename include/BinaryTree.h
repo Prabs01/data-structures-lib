@@ -2,6 +2,7 @@
 
 #include<iostream>
 #include"Queue.h"
+#include"Stack.h"
 #include<vector>
 #include<string>
 
@@ -184,20 +185,44 @@ class BinaryTree{
         void levelOrderTraversal(){
             if(!root) return;
 
-            Queue<BinaryTreeNode<T>*> nextLevel;
+            Queue<BinaryTreeNode<T>*> q;
             BinaryTreeNode<T>* ptr = root;
 
-            nextLevel.enQueue(root);
+            q.enQueue(root);
 
-            while(!nextLevel.isEmpty()){
-                ptr = nextLevel.deQueue();
+            while(!q.isEmpty()){
+                ptr = q.deQueue();
                 if(ptr){
                     std::cout<<ptr->data<<" ";
-                    if(ptr->left) nextLevel.enQueue(ptr->left);
-                    if(ptr->right) nextLevel.enQueue(ptr->right);
+                    if(ptr->left) q.enQueue(ptr->left);
+                    if(ptr->right) q.enQueue(ptr->right);
                 } 
             }
             std::cout<<"\n";
+        }
+
+        void levelOrderTraversalInReverse(){
+            if(!root) return;
+
+            Stack<T> s;
+            Queue<BinaryTreeNode<T>*> q;
+
+            BinaryTreeNode<T>* ptr = root;
+
+            q.enQueue(root);
+
+            while(!q.isEmpty()){
+                ptr = q.deQueue();
+
+                if(ptr){
+                    if(ptr->right) q.enQueue(ptr->right); // enqueue in reverse so that the stack corrects it
+                    if(ptr->left) q.enQueue(ptr->left);
+
+                    s.push(ptr->data);
+                }
+
+            }
+            s.display();
         }
 
         void display() const{ 

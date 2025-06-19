@@ -17,6 +17,7 @@ int main(){
     tree.preOrderTraversal();
     tree.postOrderTraversal();
     tree.levelOrderTraversal();
+    tree.levelOrderTraversalInReverse();
 
 
 
@@ -25,6 +26,8 @@ int main(){
     tree.insert(7);
     tree.insert(8);
     tree.levelOrderTraversal();
+
+    tree.levelOrderTraversalInReverse();
 
     int x = 1;
     std::cout<<"is "<<x<<" present?"<<(tree.search(x)?"Yes":"No")<<std::endl;
