@@ -75,6 +75,23 @@ class BinaryTree{
 
         return (sizeHelper(node->left) + sizeHelper(node->right) + 1 );
     }
+
+    void clearHelper(BinaryTreeNode<T>* node){
+        if(!node) return;
+
+        clearHelper(node->left);
+        clearHelper(node->right);
+        delete node;
+    }
+
+    int depthHelper(BinaryTreeNode<T>* node) const{
+        if(!node) return 0;
+
+        int leftDepth = depthHelper(node->left);
+        int rightDepth = depthHelper(node->right);
+
+        return (leftDepth > rightDepth)?leftDepth + 1 : rightDepth + 1;
+    }
  
 
     public:
@@ -103,6 +120,10 @@ class BinaryTree{
                 ptr->right = new BinaryTreeNode<T>(values[i++]);
                 q.enQueue(ptr->right);
             }
+        }
+
+        ~BinaryTree(){
+            clear();
         }
 
         void initializeRoot(T data){
@@ -234,8 +255,17 @@ class BinaryTree{
             return searchHelper(root, value);
         }
 
+        int depth() const{
+            return depthHelper(root);
+        }
+
         int size() const{
             return sizeHelper(root);
+        }
+
+        void clear(){
+            clearHelper(root);
+            root = nullptr;
         }
 
         

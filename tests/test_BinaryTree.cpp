@@ -39,7 +39,19 @@ int main(){
 
     tree.display();
 
-     std::cout<<"Size is "<<tree.size()<<std::endl;
+    std::cout<<"Size is "<<tree.size()<<std::endl;
+    std::cout<<"depth is "<<tree.depth()<<std::endl;
+
+    tree.insert(9);
+    tree.insert(10);
+
+    std::cout<<"Size is "<<tree.size()<<std::endl;
+    std::cout<<"depth is "<<tree.depth()<<std::endl;
+
+
+    tree.clear();
+
+    tree.display();
 
     //#####################
     //TEST 2
@@ -49,5 +61,6 @@ int main(){
     tree2.display();
 
     std::cout<<"Size is "<<tree2.size()<<std::endl;
+    std::cout<<"depth is "<<tree2.depth()<<std::endl;
 
 }
