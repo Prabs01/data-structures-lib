@@ -27,6 +27,7 @@ This library is designed to:
 
 
 ### Hashing
+- Hash Table using folding with separate chaining
 
 
 ### Graphs
