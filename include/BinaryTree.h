@@ -270,3 +270,25 @@ class BinaryTree{
 
         
 };
+
+template<typename T>
+class BST{
+    private:
+        BinaryTreeNode<T>* root;
+
+    public:
+        BST(){
+            root = nullptr;
+        }
+
+        void insertNode(T data){
+            BinaryTreeNode<T>* node(data);
+
+            if(!root){
+                root = node;
+                return;
+            } 
+
+           
+        }
+};
