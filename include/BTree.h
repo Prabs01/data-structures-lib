@@ -16,7 +16,7 @@ struct BTreeNode{
     }
 
     bool isFull(int t){
-        return (keys.size() == (2*t)+1);
+        return (keys.size() == (2*t - 1));
     }
 };
 
@@ -28,56 +28,80 @@ class BTree{
     void displayHelper(BTreeNode<T>* node, int level) const {
         if (!node) return;
 
-        std::cout << std::string(level * 4, ' ') << "|- ";
-
+        std::cout << std::string(level * 4, ' ')
+          << (node->isLeaf ? "[Leaf] " : "[Internal] ")
+          << "|- ";
         for (const auto& key : node->keys)
             std::cout << key << " ";
+        
+        std::cout << " (" << node->children.size() << " children)";
         std::cout << "\n";
+       
 
-        for (BTreeNode<T>* childNode : node->children) {
-            displayHelper(childNode, level + 1);
+        if (!node->isLeaf) {
+            for (BTreeNode<T>* childNode : node->children) {
+                displayHelper(childNode, level + 1);
+            }
         }
     }
-    void splitChild(BTreeNode<T>* parent, int i, BTreeNode<T>* y) {
-        BTreeNode<T>* z = new BTreeNode<T>(y->isLeaf);
+    void splitChild(BTreeNode<T>* parent, int i, BTreeNode<T>* fullChild) {
 
-        for(int j = t; j < y->keys.size(); ++j)
-            z->keys.push_back(y->keys[j]);
+        // fullChild has 2*t - 1 keys before split
+        BTreeNode<T>* z = new BTreeNode<T>(fullChild->isLeaf);
 
-        T middleKey = y->keys[t-1];
+        // Move last t-1 keys to z
+        for (int j = 0; j < t - 1; j++)
+            z->keys.push_back(fullChild->keys[j + t]);
 
-        y->keys.resize(t-1);
-
-        if (!y->isLeaf) {
-            for (int j = t; j < y->children.size(); ++j)
-                z->children.push_back(y->children[j]);
-            y->children.resize(t);
+        // Move last t children to z if not leaf
+        if (!fullChild->isLeaf) {
+            for (int j = 0; j < t; j++)
+                z->children.push_back(fullChild->children[j + t]);
         }
 
+        // Reduce size of fullChild
+        fullChild->keys.resize(t - 1);
+        if (!fullChild->isLeaf)
+            fullChild->children.resize(t);
+
+        // Insert new child into parent
         parent->children.insert(parent->children.begin() + i + 1, z);
-        parent->keys.insert(parent->keys.begin() + i, middleKey);
+
+        // Move median key up to parent
+        parent->keys.insert(parent->keys.begin() + i, fullChild->keys[t - 1]);
     }
 
+    void insertNonFull(BTreeNode<T>* node, T key) {
+        int i = node->keys.size() - 1;
 
-    void insertNonFull(BTreeNode<T>* node, T val){
         if (node->isLeaf) {
-            node->insert(val);
+            // Insert key into leaf at correct position
+            node->keys.insert(
+                std::upper_bound(node->keys.begin(), node->keys.end(), key),
+                key
+            );
         } else {
-            // Find child to recurse
-            int i = 0;
-            while (i < node->keys.size() && val > node->keys[i]) i++;
+            // Find child to insert into
+            while (i >= 0 && key < node->keys[i])
+                i--;
 
+            i++; // Move to correct child index
+
+            // If child is full, split first
             if (node->children[i]->isFull(t)) {
                 splitChild(node, i, node->children[i]);
-                if (val > node->keys[i]) i++;
+                // After split, decide which child to descend into
+                if (key > node->keys[i])
+                    i++;
             }
-            insertNonFull(node->children[i], val);
+
+            insertNonFull(node->children[i], key);
         }
-        
     }
 
+
     public:
-        BTree(int min_degree = 5):root(nullptr),t(min_degree){}
+        BTree(int min_degree):root(nullptr),t(min_degree){}
 
         void insert(T val){
             if (!root) {
